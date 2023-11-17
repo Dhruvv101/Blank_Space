@@ -1,0 +1,82 @@
+body{
+	margin:0;
+	padding:0;
+}
+/* .container{
+	width:90%
+	margin:10px auto;
+} */
+.pstyle{
+	height: 100px;
+	padding-left: 5px;
+	padding-right: 5px;
+	overflow-y: auto;
+	font-family: 'Edu TAS Beginner', cursive; 
+	text-align: center;
+	color: white;
+	font-size: 18px;
+}
+
+.pstyle::-webkit-scrollbar {
+	width: 8px;
+  }
+
+  .pstyle::-webkit-scrollbar-thumb {
+	background-color: #90A4AE;
+	border-radius: 10px;
+  }
+
+  .pstyle::-webkit-scrollbar-track {
+	background-color: rgba(62, 90, 129, 0);
+  }
+  
+.p1style{
+	height: 20px;
+	overflow: hidden;
+	font-family: 'M PLUS 1p', sans-serif; 
+	text-align: center;
+	color: rgb(195, 247, 247);
+	font-size: 16px;
+}
+.banner {
+    background-color: rgba(0, 18, 44, 0.82);
+    background: -webkit-linear-gradient(to right, rgba(0, 18, 44, 0.82), rgba(11, 49, 102, 0.82), rgba(65, 106, 163, 0.82));
+    background: linear-gradient(to right, rgba(0, 18, 44, 0.82),rgba(11, 49, 102, 0.82), rgba(65, 106, 163, 0.82));
+    }
+.button {
+		display: inline-block;
+		padding: 10px 20px;
+		background-color: white;
+		color: #F11A7B; /* Replace with your desired text color */
+		text-decoration: none;
+		border-radius: 5px;
+	}
+.portfolio-menu{
+	text-align:center;
+}
+.portfolio-menu ul li{
+	display:inline-block;
+	margin:0;
+	list-style:none;
+	padding:10px 15px;
+	cursor:pointer;
+	-webkit-transition:all 05s ease;
+	-moz-transition:all 05s ease;
+	-ms-transition:all 05s ease;
+	-o-transition:all 05s ease;
+	transition:all .5s ease;
+}
+.container {
+	min-height: 100vh; /* Ensure the container takes up at least the full viewport height */
+	display: flex;
+	flex-direction: column;
+  }
+/* .portfolio-item{
+	*width:100%;*
+} */
+
+.portfolio-item .item{
+	/*width:303px;*/
+	float:left;
+	margin-bottom:10px;
+}

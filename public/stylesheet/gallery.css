@@ -1,0 +1,66 @@
+body{
+	margin:0;
+	padding:0;
+}
+.container {
+	min-height: 100vh; /* Ensure the container takes up at least the full viewport height */
+	display: flex;
+	flex-direction: column;
+  }
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: white;
+    color: #F11A7B; /* Replace with your desired text color */
+    text-decoration: none;
+    border-radius: 5px;
+}
+.banner {
+    background-color: rgba(0, 18, 44, 0.82);
+    background: -webkit-linear-gradient(to right, rgba(0, 18, 44, 0.82), rgba(11, 49, 102, 0.82), rgba(65, 106, 163, 0.82));
+    background: linear-gradient(to right, rgba(0, 18, 44, 0.82),rgba(11, 49, 102, 0.82), rgba(65, 106, 163, 0.82));
+    }
+    
+.portfolio-menu{
+	text-align:center;
+}
+.portfolio-menu ul li{
+	display:inline-block;
+	margin:0;
+	list-style:none;
+	padding:10px 15px;
+	cursor:pointer;
+	-webkit-transition:all 05s ease;
+	-moz-transition:all 05s ease;
+	-ms-transition:all 05s ease;
+	-o-transition:all 05s ease;
+	transition:all .5s ease;
+}
+.portfolio-item .item{
+	/*width:303px;*/
+	float:left;
+	margin-bottom:10px;
+}
+/* rgba(62, 90, 129, 0.82) */
+.grey-bg {
+	background-color: rgba(56, 99, 162, 0.82);
+	color: white;
+	padding: 10px;
+	max-width: 300px; 
+	max-height: 60px;
+	overflow: hidden;
+	transition: max-height 0.9s;
+}
+ .grey-bg:hover p {
+	transform: scale(1.03);
+	transition: transform 0.5s;
+} 
+.max-img-size{
+	max-width: 300px; 
+	max-height: 300px;
+	overflow: hidden;
+}
+.max-img-size:hover img {
+	transform: scale(1.1);
+	transition: transform 1s;
+}
