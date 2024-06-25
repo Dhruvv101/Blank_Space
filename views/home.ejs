@@ -19,9 +19,9 @@
           <div class="col-lg-2"></div>
           <div class="col-lg-8 text-center">
               <h1 class="custom-larger-text lh-1 mb-3">Thapar Technical Society</h1>
-              <p class="custom-description-text">
+              <!-- <p class="custom-description-text">
                 "A dynamic hub where passion meets expertise. Whether you're a seasoned developer, a budding tech enthusiast, or someone curious about the latest tech trends, there's a place for you in our ever-growing online society."
-              </p>
+              </p> -->
           </div>
           <div class="col-lg-2"></div>
       </div>
@@ -31,29 +31,37 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-lg-6"><img src="/images/pc_girl.png" alt="pc girl" width="103%"></div>
-    <div class="col-lg-6 con"><p><b>
+    <div class="col-lg-6 con"><p>
+      
       <ul>
+        <p class="text-center" style="font-family: poppins; font-size: 48px; font-weight: bold;">
+          The fastest growing society at Thapar
+      </p>
         <li class="mb-4" style="font-size: 24px;">Engaging Technical Workshops and Webinars</li>
         <li class="mb-4" style="font-size: 24px;">Interactive Coding Challenges and Hackathons</li>
       </ul>
-      </b></p></div>
+      </p></div>
   </div>
   <div class="row mt-5">
-    <div class="col-lg-6 con"><p><b>
+    <div class="col-lg-6 con"><p>
       <ul>
+        <p class="text-center" style="font-family: poppins; font-size: 48px; font-weight: bold;">
+          Grow with us
+      </p>
+        
       <li class="mb-4" style="font-size: 24px;">Networking Opportunities with like minded people</li>
       <li class="mb-2" style="font-size: 24px;"> Exciting Tech Events and Projects</li>
-    </ul></b></p></div>
+    </ul></p></div>
     <div class="col-lg-6"><img src="/images/rocket_boy.png" alt="rocket boy" width="103%"></div>
   </div>
 </div>
 
   <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-    <div class="carousel-indicators">
+    <!-- <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
+    </div> -->
     <div class="div3">
         <div class="carousel-inner slider">
             <div class="carousel-item active">
@@ -87,34 +95,81 @@
             </button>
         </div>
 </div>
+<div class="gayab">
+<div  style="color: #2c3e50;"><h1 class="text-center bold">Our Events</h1></div>
 <div class="image-container">
-    <div class="d-flex d-flex justify-content-around event div4">
-        <div class="s"><img src="data:image/jpeg;base64,<%=events[0].img.toString('base64')%>" alt="Error"></div>
-        <div class="l"><img src="data:image/jpeg;base64,<%=events[1].img.toString('base64')%>" alt="Error"></div>
-        <div class="s"><img src="data:image/jpeg;base64,<%=events[2].img.toString('base64')%>" alt="Error"></div>
-    </div>
+  <div class="d-flex justify-content-around event div4">
+      <div class="s">
+          <a href="/society/events?type=ongoing" style="text-decoration: none;">
+              <img src="data:image/jpeg;base64,<%=events[0].img.toString('base64')%>" alt="Error">
+              <div class="venue-text" >
+                  <%=events[0].venue%>
+              </div>
+          </a>
+      </div>
+      <div class="l">
+          <a href="/society/events?type=ongoing" style="text-decoration: none;">
+              <img src="data:image/jpeg;base64,<%=events[1].img.toString('base64')%>" alt="Error">
+              <div class="venue-text" >
+                  <%=events[1].venue%>
+              </div>
+          </a>
+      </div>
+      <div class="s">
+          <a href="/society/events?type=ongoing" style="text-decoration: none;">
+              <img src="data:image/jpeg;base64,<%=events[2].img.toString('base64')%>" alt="Error">
+              <div class="venue-text">
+                  <%=events[2].venue%>
+              </div>
+          </a>
+      </div>
   </div>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center border-top px-3 text-white" style="background-color: rgba(0, 18, 44, 0.82); height: 76px;">
+</div>
+</div>
+  <footer class="d-flex flex-wrap justify-content-between align-items-center border-top px-3 text-white" style="background-color: rgba(0, 18, 44, 0.82); height: 76px;">
       <p class="col-md-4 mb-0"><a href="/" class="col-md-4 d-inline me-1 mb-3 mb-md-0 md-auto link-body-emphasis text-decoration-none">
       </a>© 2023 Company, Inc</p>
       <ul class="nav col-md-4 justify-content-end ">
         <li ><a href="#" class="nav-link px-2 ab">Home</a></li>
+        <li><a class="nav-link px-2 ab" href="/society/members">Members</a></li>
+        <%if(!currentUser){%>
         <li ><a href="/society/joinus" class="nav-link px-2 ab">Join Us</a></li>
+        <%}%>
       </ul>
     </footer>
 <style>
-  .custom-larger-text {
-        font-size: 7rem; /* Adjust the value to make the text larger */
+    @media (max-width: 768px) {
+        .custom-larger-text {
+            font-size: 4rem; 
+        }
+        .gayab {
+            display: none;
+        }
+    }
+
+    @media (min-width: 769px) {
+        .custom-larger-text {
+            font-size: 7rem;
+        }
     }
 .tc{
   color: white;
   font-family: 'Montserrat', sans-serif;
 }
 .image-container {
-    background-image: url('/images/eventback.jpg');
+    /* background-image: url('/images/eventback.jpg'); */
     background-size: cover;
     background-position: center;
     padding: 20px;
+}
+
+.venue-text {
+  
+  text-align: center;
+    font-family: 'Your Chosen Font', sans-serif;
+    font-size: 28px;
+    color: #F11A7B;
+    margin-top: 10px;
 }
 .custom-description-text {
   font-family: 'Edu TAS Beginner', cursive;
@@ -126,8 +181,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #2c3e50; /* Change the color as needed */
-    font-style: italic; /* Change the font style as needed */
+    color: #2c3e50; 
+    font-style: italic; 
 }
 .div1
 {

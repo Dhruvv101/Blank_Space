@@ -11,13 +11,16 @@
           <a class="nav-link" href="/society/events?type=ongoing">Events</a>
           <a class="nav-link" href="/society/gallery">Gallery</a>
           <a class="nav-link" href="/society/members">Members</a>
+          <% if(currentUser) { %>
+          <a class="nav-link" href="/society/announcements">Announcements</a>
+          <% } %>
           <% if(!currentUser) { %>
             <a class="nav-link" href="/society/login">Login</a>
             <% } else { %>
-            <a class="nav-link" href="/society/logout">Logout</a>
               <% if(currentUser.role === "admin") { %>
                 <a class="nav-link" href="/register">Register</a>
               <% } %>
+            <a class="nav-link" href="/society/logout">Logout</a>
           <% } %>
           
         </div>
@@ -27,6 +30,9 @@
   </nav>
 
 <style>
+  .navbar-toggler-icon {
+        background-color: white;
+    }
     .navbar-brand{
   color:white;
 }

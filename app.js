@@ -9,13 +9,14 @@ const Gallery=require('./models/gallery');
 const methodOverride=require('method-override');
 const event = require('./models/event');
 const member = require('./models/member');
+const anounce = require('./models/anouncement');
 var bodyParser = require('body-parser')
 const { isLoggedIn, isAdmin,isHeadorAdmin } = require('./middleware');
 const User = require('./models/login'),
-    passport = require("passport"),
-    session = require("express-session"),
-    flash = require("connect-flash");
-    LocalStrategy  = require("passport-local");
+passport = require("passport"),
+session = require("express-session"),
+flash = require("connect-flash");
+LocalStrategy  = require("passport-local");
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -147,7 +148,7 @@ app.post('/submit-form', upload.single('cv'), (req, res) => {
 
 
 app.get('/society',async(req,res)=>{
-    const events=await event.find({});
+    const events=await event.find({}).limit(3);
     var currentUser;
     if(req.isAuthenticated()){
         currentUser = await User.findById(req.user._id); 
@@ -179,23 +180,6 @@ app.get('/society/logout', (req, res) => {
         res.redirect('/society');
     });
 })
-
-// app.post('/society/login',async(req,res)=>{
-//     const { username, password } = req.body;
-
-//   try {
-//     const user = await login.findOne({ username, password });
-//     if (!user) {
-//         var isTrue=false;
-//         res.render('login_page',{isTrue})
-//     //   return res.status(401).json({ error: 'Authentication failed' });
-//     }
-//         res.render('home',user)
-//   } catch (error) {
-//     var isTrue=false;
-//     res.render('login_page', {isTrue});
-//   }
-// });
 
 app.post('/register', jsonParser, isLoggedIn, isAdmin, async(req,res) => {
     const { email, username, password, role } = req.body;
@@ -263,50 +247,11 @@ app.post('/society/gallery',isLoggedIn, upload.single('gallery[image]'), [
     }
 });
 
-
-// const { body, validationResult } = require('express-validator');
-
-// // ...
-
-// app.post('/society/gallery', upload.single('gallery[image]'), [
-//     body('gallery[description]').trim().not().isEmpty().withMessage('Description is required.'),
-//     body('gallery[image]').custom((value, { req }) => {
-//         if (!req.file) {
-//            res.render('home'); // throw new Error('Image is required.');
-//         }
-//         // You can add additional image validation here, e.g., file type, size, etc.
-//         return true;
-//     }),
-// ], async (req, res) => {
-//     const errors = validationResult(req);
-
-//     if (!errors.isEmpty()) {
-//         // Validation failed, send errors back to the client
-//         return res.status(400).json({ errors: errors.array() });
-//     }
-
-//     // Proceed with saving the gallery if validation passes
-//     const gal = new Gallery(req.body.gallery);
-//     gal.image = req.file.buffer;
-//     await gal.save();
-//     res.redirect('/society/gallery');
-// });
-
-
 app.delete('/society/gallery/:id',isLoggedIn,isHeadorAdmin, async(req,res)=>{
     const {id}= req.params
     await Gallery.findByIdAndDelete(id,{...req.body.Gallery})
     res.redirect(`/society/gallery`)
 })
-
-// app.get('/society/events', async (req,res)=>{
-//     var currentUser;
-//     if(req.isAuthenticated()){
-//         currentUser = await User.findById(req.user._id); 
-//     }
-//     const events=await event.find({});
-//     res.render('event/event',{events, currentUser});
-// })
 
 app.get('/society/events', async (req, res) => {
     try {
@@ -315,7 +260,6 @@ app.get('/society/events', async (req, res) => {
             currentUser = await User.findById(req.user._id); 
         }
         let events;
-        var currData = new Date();
         switch (req.query.type) {
             case 'ongoing':
                 events = await event.find({ start_date: { $lte: new Date() }, end_date: { $gte: new Date() } });
@@ -347,16 +291,12 @@ app.post('/society/events',isLoggedIn,upload.single('event[img]'),async(req,res)
     res.redirect('/society/events');
 })
 
+
 app.delete('/society/events/:id',isLoggedIn,isHeadorAdmin, async(req,res)=>{
     const {id}= req.params
     await event.findByIdAndDelete(id,{...req.body.event})
     res.redirect(`/society/events`)
 })
-
-// app.get('/society/events/:id/edit',async(req,res)=>{
-//     const even=await event.findById(req.params.id)
-//     res.render('event/update',{even});
-// })
 
 app.get('/society/community',(req,res)=>{
     res.send('community')
@@ -390,6 +330,52 @@ app.delete('/society/members/:id',isLoggedIn,isAdmin, async(req,res)=>{
     const {id}= req.params
     await member.findByIdAndDelete(id,{...req.body.member})
     res.redirect(`/society/members`)
+})
+
+app.get('/society/announcements',isLoggedIn,async (req,res)=>{
+    var currentUser;
+    if(req.isAuthenticated()){
+        currentUser = await User.findById(req.user._id); 
+    }
+    const anouncements=await anounce.find({});
+    res.render('announcement/anounce',{anouncements,currentUser})
+})
+
+app.get('/society/announcements/new',isLoggedIn,isAdmin,async(req,res)=>{
+    var currentUser;
+    if(req.isAuthenticated()){
+        currentUser = await User.findById(req.user._id); 
+    }
+    const users = await User.find();
+    res.render('announcement/new',{users,currentUser})
+})
+
+app.post('/society/announcements',isLoggedIn,isAdmin,async(req,res)=>{
+    var currentUser;
+    if(req.isAuthenticated()){
+        currentUser = await User.findById(req.user._id); 
+    }
+    const selectedUser = req.body.anounces.to;
+    const announcementMessage = req.body.anounces.message;
+    const user = await User.findOne({ username: selectedUser });
+    if(selectedUser!="All"&&selectedUser!="All Admins"&&selectedUser!="All Heads"&&!user)
+    {
+        return res.status(401).json({msg:'No such user'})
+    }
+    const newAnnouncement = new anounce({
+    to: selectedUser,
+    message: announcementMessage,
+    });
+    newAnnouncement.from=currentUser.username
+    newAnnouncement.send_date=new Date()
+    await newAnnouncement.save();
+    res.redirect('/society/announcements');
+})
+
+app.delete('/society/announcements/:id',isLoggedIn,isAdmin, async(req,res)=>{
+    const {id}= req.params
+    await anounce.findByIdAndDelete(id,{...req.body.member})
+    res.redirect(`/society/announcements`)
 })
 
 app.listen(3000,()=>{
